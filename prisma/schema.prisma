@@ -6,12 +6,13 @@
 
 generator client {
   provider = "prisma-client-js"
-  //output   = "../generated/prisma"
+
 }
 
 datasource db {
   provider = "sqlite"
   url      = "file:../src/database/database.sqlite"
+
 }
 
 model User {
@@ -31,7 +32,7 @@ model Admin {
 }
 
 model Place{
-   id       Int    @id @default(autoincrement())
+  id       Int    @id @default(autoincrement())
   name     String
   description String
   address String

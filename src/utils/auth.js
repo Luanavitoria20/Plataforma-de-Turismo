@@ -1,21 +1,31 @@
-import jwt from "jsonwebtoken"
-import bcrypt from "bcrypt"
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+// Número de rounds usados para encriptar a senha
+const SALT_ROUNDS = 10;
 
-const SECRET = "segredo_super_secreto" // pode usar .env em produção
+// Chave secreta do JWT (vinda do .env)
+const JWT_SECRET = process.env.JWT_SECRET;
 
-export function generateToken(payload) {
-  return jwt.sign(payload, SECRET, { expiresIn: "1h" })
-}
-
-export function verifyToken(token) {
-  return jwt.verify(token, SECRET)
-}
-
+// Função para encriptar a senha
 export async function hashPassword(password) {
-  const saltRounds = 10
-  return await bcrypt.hash(password, saltRounds)
+  return await bcrypt.hash(password, SALT_ROUNDS);
 }
 
-export async function comparePassword(password, hash) {
-  return await bcrypt.compare(password, hash)
+// Função para comparar senha digitada com a senha salva
+export async function comparePassword(password, hashedPassword) {
+  return await bcrypt.compare(password, hashedPassword);
+}
+
+// Função para gerar o token JWT
+export function generateToken(user) {
+  return jwt.sign(
+    { id: user.id, email: user.email }, // payload do token
+    JWT_SECRET, // chave secreta
+    { expiresIn: "1h" } // tempo de validade
+  );
+}
+
+// ✅ Corrigido para "verifyToken"
+export function verifyToken(token) {
+  return jwt.verify(token, JWT_SECRET);
 }

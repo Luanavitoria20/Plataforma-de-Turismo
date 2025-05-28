@@ -1,17 +1,18 @@
+import express from "express";
 
-import express from "express"
-import RegisterRoutesRouter from "./routes/RegisterRouter.js"
-import placeRouter from "./routes/placeRouter.js"
-import loginRouter from "./routes/loginRouter.js"
+// Importa as rotas da aplicação
+import registerRouter from "./routes/RegisterRouter.js";
+import placeRouter from "./routes/placeRouter.js";
+import loginRouter from "./routes/loginRouter.js";
 
-const app = express()
+const app = express();
 
-// Permite receber dados em JSON
-app.use(express.json())
 
-// Rotas principais
-app.use("/register", RegisterRoutesRouter) // Rotas de registro (user e admin)
-app.use("/place", placeRouter)             // Rotas de locais turísticos
-app.use("/login", loginRouter)             // Rota de login
+app.use(express.json());
 
-export default app
+// Rotas para os diferentes recursos da API
+app.use("/register", registerRouter);  // Registro de usuários
+app.use("/login", loginRouter);               // Login dos usuários
+app.use("/places", placeRouter);              // Gerenciamento de locais turísticos
+
+export default app;
