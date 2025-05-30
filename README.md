@@ -92,5 +92,3 @@ src/
 3. Nas rotas protegidas (como POST /places), adicione no header:
 Authorization: Bearer <seu_token_jwt_aqui>
 
-## Desenvolver
-Luana Vitoria Santos Araujo
